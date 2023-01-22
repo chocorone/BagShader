@@ -13,7 +13,7 @@ Shader "URPBagShader/NormalBagShader"
         _Strength("Strength",Range(0,1))=0.5
         _Blur("Blur",Range(0,1))=0.5
     }
-    
+
     SubShader
     {
         Cull [_Cull]
@@ -26,8 +26,6 @@ Shader "URPBagShader/NormalBagShader"
             #pragma fragment frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareOpaqueTexture.hlsl"
 
             #include "../Util.hlsl"
             
@@ -72,9 +70,19 @@ Shader "URPBagShader/NormalBagShader"
             
             half4 frag (v2f i) : SV_Target
             {
-                half4 col = half4(SampleSceneColor(i.uv),1);
+                BagShaderData data = (BagShaderData)0;
+                data.uv = i.uv;
+                data.color = half4(SampleSceneColor(i.uv),1);
+                data.splitX = _SplitX;
+                data.splitY = _SplitY;
+                data.shift = _Shift;
+                data.frec = _Frec;
+                data.ratio = _Ratio;
+                data.blur = _Blur;
+                data.strength = _Strength;
+                data.colorGap = _ColorGap;
 
-                col.rgb = 1- col.rgb;
+                half4 col = CalBagShaderColor(data);
                 return col;
             }
 
