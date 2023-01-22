@@ -16,11 +16,10 @@ Shader "BagShader/BagImageShader"
     SubShader
     {
         Pass {
-
+            Blend SrcAlpha OneMinusSrcAlpha
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            //#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "UnityCG.cginc"
 
             #include "../Util.hlsl"
@@ -42,7 +41,6 @@ Shader "BagShader/BagImageShader"
 
                 o.pos = UnityObjectToClipPos(v.vertexOS);
                 o.uv = v.texcoord;
-
                 return o;
             }
 

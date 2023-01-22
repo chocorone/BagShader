@@ -16,7 +16,7 @@ Shader "URPBagShader/BagImageShader"
     SubShader
     {
         Pass {
-
+            Blend SrcAlpha OneMinusSrcAlpha
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag

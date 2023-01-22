@@ -45,8 +45,7 @@ Shader "BagShader/BagShader"
                 v2f o = (v2f)0;
 
                 o.pos = UnityObjectToClipPos(v.vertexOS);
-                //float4 worldPos = ComputeGrabScreenPos(o.vertex);
-                float4 worldPos=  ComputeScreenPos(o.pos);
+                float4 worldPos = ComputeGrabScreenPos(o.pos);
                 o.uv =worldPos.xy/worldPos.w;
 
                 return o;
@@ -68,14 +67,14 @@ Shader "BagShader/BagShader"
                 data.uv = i.uv;
                 data.splitX = _SplitX;
                 data.splitY = _SplitY;
-                data.shift = _Shift;
+                data.shift = -_Shift/_SplitY;
                 data.frec = _Frec;
                 data.ratio = _Ratio;
                 data.blur = _Blur;
                 data.strength = _Strength;
                 data.colorGap = _ColorGap;
                 data.mainTex = _GrabTexture;
-                data.isImage = false;
+                data.isImage = true;
 
                 half4 col = CalBagShaderColor(data);
                 return col;
