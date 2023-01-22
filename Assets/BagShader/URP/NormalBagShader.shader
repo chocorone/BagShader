@@ -4,8 +4,16 @@ Shader "URPBagShader/NormalBagShader"
     {
         [Enum(UnityEngine.Rendering.CullMode)]
         _Cull("Cull", Float) = 0
-        _MainTex ("Texture", 2D) = "white" {}
+        _SplitX("SplitX",float) = 5
+        _SplitY("SplitY",float) = 5
+        _Shift("Shift",Range(0,1)) = 0.1
+        _Frec("Frec",Range(1,20))=1
+        _ColorGap("ColorGap",Range(-1,1)) = 1
+        _Ratio("Ratio",Range(0,1))=0.1
+        _Strength("Strength",Range(0,1))=0.5
+        _Blur("Blur",Range(0,1))=0.5
     }
+    
     SubShader
     {
         Cull [_Cull]
@@ -33,7 +41,6 @@ Shader "URPBagShader/NormalBagShader"
             struct v2f {
                 float4 pos : SV_POSITION;
                 float2 uv : TEXCOORD0;
-                float4 worldPos : TEXCOORD1;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
             };
@@ -47,17 +54,25 @@ Shader "URPBagShader/NormalBagShader"
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
                 o.pos = TransformObjectToHClip(v.vertexOS);
-                o.worldPos=  ComputeScreenPos(o.pos);
-                o.uv =v.texcoord;
+                float4 worldPos=  ComputeScreenPos(o.pos);
+                o.uv =worldPos.xy/worldPos.w;
 
                 return o;
             }
 
+            float _SplitX;
+			float _SplitY;
+            half _Shift;
+            half _Frec;
+            float _ColorGap;
+            float _Ratio;
+            float _Strength;
+            float _Blur;
+
             
             half4 frag (v2f i) : SV_Target
             {
-                half2 screenPos = i.worldPos.xy / i.worldPos.w;
-                half4 col = half4(SampleSceneColor(screenPos),1);
+                half4 col = half4(SampleSceneColor(i.uv),1);
 
                 col.rgb = 1- col.rgb;
                 return col;
