@@ -53,13 +53,14 @@ Shader "URPBagShader/BagShader"
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-                o.pos = TransformObjectToHClip(v.vertexOS);
+                o.pos = TransformObjectToHClip(v.vertexOS.xyz);
                 float4 worldPos=  ComputeScreenPos(o.pos);
                 o.uv =worldPos.xy/worldPos.w;
 
                 return o;
             }
 
+            CBUFFER_START(UnityPerMaterial)
             float _SplitX;
 			float _SplitY;
             half _Shift;
@@ -68,6 +69,7 @@ Shader "URPBagShader/BagShader"
             float _Ratio;
             float _Strength;
             float _Blur;
+            CBUFFER_END
             
             half4 frag (v2f i) : SV_Target
             {

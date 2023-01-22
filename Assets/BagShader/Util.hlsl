@@ -48,14 +48,14 @@ half4 CalBagShaderColor(BagShaderData data){
     int noiseindex = divisionindex / blackinterval;
 
     float3 timenoise = float3(0, int(_Time.x*data.frec * 61), int(_Time.x*data.frec * 83));
-    float noiserate = rand(timenoise) < 0.05&&data.strength!=0 ? 10 : 1;
+    float noiserate = rand(timenoise.xy) < 0.05&&data.strength!=0 ? 10 : 1;
 
-    float xnoise = rand(float3(noiseindex, 0, 0) + timenoise);
+    float xnoise = rand((float3(noiseindex, 0, 0) + timenoise).xy);
     xnoise = xnoise * xnoise - 0.5; 
     xnoise *= noiserate;
     xnoise *= 0.002* (_SinTime.w*(data.strength==0?1:data.frec)/ 2 + 1.1); 
     if(data.strength!=0){
-        xnoise = xnoise + (abs((int(_Time.x * 2000) % int(division / blackinterval)) - noiseindex) < 5 ? 0.005 : 0); 
+        xnoise = xnoise + ((uint(_Time.x * 2000) % int(division / blackinterval) - noiseindex) < 5 ? 0.005 : 0); 
     }
     
     data.uv += float2(xnoise, 0);

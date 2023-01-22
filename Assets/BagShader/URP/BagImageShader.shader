@@ -1,4 +1,4 @@
-Shader "URPBagShader/BagImageShader"
+Shader "BagShader/BagImageShader"
 {
     Properties
     {
@@ -53,13 +53,15 @@ Shader "URPBagShader/BagImageShader"
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-                o.pos = TransformObjectToHClip(v.vertexOS);
+                o.pos = TransformObjectToHClip(v.vertexOS.xyz);
                 o.uv = v.texcoord;
 
                 return o;
             }
 
             sampler2D _MainTex;
+            
+            CBUFFER_START(UnityPerMaterial)
             float _SplitX;
 			float _SplitY;
             half _Shift;
@@ -68,6 +70,7 @@ Shader "URPBagShader/BagImageShader"
             float _Ratio;
             float _Strength;
             float _Blur;
+            CBUFFER_END
 
             
             half4 frag (v2f i) : SV_Target
@@ -86,8 +89,6 @@ Shader "URPBagShader/BagImageShader"
                 data.mainTex = _MainTex;
 
                 half4 col = CalBagShaderColor(data);
-                // half4 col = tex2D(_MainTex,i.uv);
-                // col.rgb = 1-col.rgb;
                 return col;
             }
 
