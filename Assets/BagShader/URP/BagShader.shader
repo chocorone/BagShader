@@ -1,4 +1,4 @@
-Shader "URPBagShader/NormalBagShader"
+Shader "URPBagShader/BagShader"
 {
     Properties
     {
@@ -24,10 +24,14 @@ Shader "URPBagShader/NormalBagShader"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+
+            #define Bag_IS_URP
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             #include "../Util.hlsl"
+
+            
             
             struct appdata {
                 float4 vertexOS : POSITION;
@@ -70,7 +74,7 @@ Shader "URPBagShader/NormalBagShader"
             
             half4 frag (v2f i) : SV_Target
             {
-                BagShaderData data = (BagShaderData)0;
+                BagShaderData data;
                 data.uv = i.uv;
                 data.color = half4(SampleSceneColor(i.uv),1);
                 data.splitX = _SplitX;
@@ -81,6 +85,7 @@ Shader "URPBagShader/NormalBagShader"
                 data.blur = _Blur;
                 data.strength = _Strength;
                 data.colorGap = _ColorGap;
+                data.isImage = false;
 
                 half4 col = CalBagShaderColor(data);
                 return col;
