@@ -35,8 +35,6 @@ Shader "URPBagShader/BagShader"
             
             struct appdata {
                 float4 vertexOS : POSITION;
-                float2 texcoord : TEXCOORD0;
-
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             }; 
 
@@ -70,13 +68,11 @@ Shader "URPBagShader/BagShader"
             float _Ratio;
             float _Strength;
             float _Blur;
-
             
             half4 frag (v2f i) : SV_Target
             {
                 BagShaderData data;
                 data.uv = i.uv;
-                data.color = half4(SampleSceneColor(i.uv),1);
                 data.splitX = _SplitX;
                 data.splitY = _SplitY;
                 data.shift = _Shift;
