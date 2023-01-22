@@ -1,4 +1,4 @@
-Shader "BagShader/BagImageShader"
+Shader "URPBagShader/BagImageShader"
 {
     Properties
     {
@@ -15,9 +15,6 @@ Shader "BagShader/BagImageShader"
 
     SubShader
     {
-
-        //Tags { "Queue" = "Transparent" }
-
         Pass {
 
             HLSLPROGRAM
