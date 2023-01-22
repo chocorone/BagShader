@@ -80,15 +80,18 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
+    - _Blur: 0.5
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _ColorGap: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
+    - _Frec: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -96,11 +99,16 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
+    - _Ratio: 0.05
     - _ReceiveShadows: 1
+    - _Shift: 0.1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _SplitX: 8
+    - _SplitY: 8
     - _SrcBlend: 1
+    - _Strength: 0.5
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
